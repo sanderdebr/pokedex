@@ -1,6 +1,6 @@
 import constants from '../constants/action-types';
 
-export function fetchData() {
+export function fetchAll() {
     return {
         type: constants.DATA_REQUESTED
     }

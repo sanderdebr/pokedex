@@ -7,21 +7,46 @@ export default function* watcherSaga() {
 
 function* workerSaga() {
     try {
-        const payload = yield call(fetchData);
+        const payload = yield call(fetchAll);
         yield put({ type: actionTypes.DATA_LOADED, payload })
     } catch (e) {
         yield put({ type: actionTypes.API_ERROR, payload: e })
     }
 };
 
-function fetchData() {
-    const start = new Date().getTime();
-    return fetch(`https://pokeapi.co/api/v2/pokemon?limit=100`)
+// Chaining multiple promises
+function fetchAll() {
+    const pokemons = [];
+    const start = performance.now();
+    fetch(`https://pokeapi.co/api/v2/pokemon?limit=200`)
+        .then(response => response.json())
+        .then(data => data.results)
+        // Running Promise.All
+        .then(results => {
+            fetchPokemon(results).then(pokemons => console.log(pokemons));
+        })
+        .then(() => {
+            const end = performance.now();
+            const timer = end - start;
+        })
+};
+
+let pokemons = [];
+
+const fetchPokemon = async (results) => {
+    Promise.all(results.map(result => {
+        getPokemon(result)
+            .then(item => pokemons.push(item))
+    }))
+    .then(() => {
+        return pokemons;
+    })
+};
+
+const getPokemon = async result => {
+    return fetch(`https://pokeapi.co/api/v2/pokemon/${result.name}`)
         .then(response => response.json())
         .then(data => {
-            const result = data.results;
-            const end = new Date().getTime();
-            const timer = end - start;
-            return {result, timer};
-        });
-};
+            return data;
+        })
+}
