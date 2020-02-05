@@ -8,9 +8,9 @@ export default function* watcherSaga() {
 function* workerSaga() {
     try {
         const payload = yield call(getData);
-        yield put({ type: "DATA_LOADED", payload });
+        yield put({ type: constant.DATA_LOADED, payload });
     } catch (e) {
-        yield put({ type: "API_ERRORED", payload: e });
+        yield put({ type: constant.API_ERRORED, payload: e });
     }
 };
 
