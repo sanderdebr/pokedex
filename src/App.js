@@ -1,15 +1,13 @@
 import React from 'react';
+
 import Nav from './components/Nav';
-import ConnectedList from './components/List';
+import List from './components/List';
 
-const App = () => {
-
-    return (
-        <>
-            <Nav />
-            <ConnectedList />
-        </>
-    )
-};
+const App = () => (
+    <>
+        <Nav />
+        <List />
+    </>
+);
 
 export default App;
