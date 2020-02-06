@@ -6,15 +6,15 @@ export function fetchAll() {
     }
 };
 
-export function addPokemon(pokemon) {
-    return {
-        type: constants.ADD_POKEMON,
-        payload: pokemon
-    }
-};
-
 export function resetData() {
     return {
         type: constants.RESET_DATA
+    }
+};
+
+export function setFilter(filter) {
+    return {
+        type: constants.SET_FILTER,
+        payload: filter
     }
 };

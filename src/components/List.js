@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchAll, addPokemon, resetData } from '../redux/actions';
+import { fetchAll, resetData } from '../redux/actions';
 
 import { makeStyles, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
@@ -26,24 +26,25 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function List({ fetchAll, addPokemon, resetData, pokemons, loading, timer }) {
+function List({ fetchAll, resetData, pokemons, loading, timer, filter }) {
     const classes = useStyles();
     
     const testPokemon = { name: 'Pikachu' };
+
+    const filteredPokemons = pokemons.filter(pk => pk.name.includes(filter));
     
     return (
         <>
             <Container maxWidth="lg">
                 <Paper className={classes.options}>
-                    <Button variant="outlined" onClick={() => addPokemon(testPokemon)}>Add Pokemon</Button>
-                    <Button variant="outlined" onClick={fetchAll}>Catch 5 Pokemons</Button>
+                    <Button variant="outlined" onClick={fetchAll}>Catch Pokemons</Button>
                     <Button variant="outlined" onClick={resetData}>Reset</Button>
                     <Typography>Catched in: {timer ? timer : '...'} ms</Typography>
                 </Paper>
             </Container>
             <Container maxWidth="lg" className={classes.container}>
                 {loading ? <Typography>Catching...</Typography> : ''}
-                {pokemons.map(pokemon => (
+                {filteredPokemons.map(pokemon => (
                     <PreviewCard 
                         key={pokemon.name} 
                         pokemon={pokemon}
@@ -55,13 +56,17 @@ function List({ fetchAll, addPokemon, resetData, pokemons, loading, timer }) {
 };
 
 function mapStateToProps(state) {
-    return { pokemons: state.pokemons, loading: state.loading, timer: state.timer }
+    return { 
+        pokemons: state.pokemons, 
+        loading: state.loading, 
+        timer: state.timer,
+        filter: state.filter
+    }
 };
 
 const actionCreators = {
     resetData,
     fetchAll,
-    addPokemon,
 };
 
 export default connect(mapStateToProps, actionCreators)(List);

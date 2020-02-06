@@ -2,6 +2,7 @@ import actionTypes from '../constants/action-types';
 
 const initialState = {
     pokemons: [],
+    filter: '',
     loading: false,
     timer: null,
     error: null
@@ -9,8 +10,6 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     switch(action.type) {
-        case actionTypes.ADD_POKEMON:
-            return {...state, pokemons: state.pokemons.concat(action.payload)};
         case actionTypes.DATA_REQUESTED:
             return {...state, loading: true};
         case actionTypes.DATA_LOADED:
@@ -22,6 +21,8 @@ function rootReducer(state = initialState, action) {
             return {...state, error: action.payload, loading: false}
         case actionTypes.RESET_DATA:
             return initialState;
+        case actionTypes.SET_FILTER:
+            return {...state, filter: action.payload}
         default:
             return state;
     };

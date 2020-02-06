@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setFilter } from '../redux/actions';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar() {
+function Navbar({ setFilter, filter }) {
   const classes = useStyles();
 
   return (
@@ -76,6 +80,8 @@ export default function SearchAppBar() {
             </div>
             <InputBase
               placeholder="Search…"
+              value={filter}
+              onChange={e => setFilter(e.target.value)}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -87,4 +93,8 @@ export default function SearchAppBar() {
       </AppBar>
     </div>
   );
-}
+};
+
+const Nav = connect(null, { setFilter })(Navbar);
+
+export default Nav;
