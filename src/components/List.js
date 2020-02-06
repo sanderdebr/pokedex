@@ -36,15 +36,18 @@ function List({ fetchAll, addPokemon, resetData, pokemons, loading, timer }) {
             <Container maxWidth="lg">
                 <Paper className={classes.options}>
                     <Button variant="outlined" onClick={() => addPokemon(testPokemon)}>Add Pokemon</Button>
-                    <Button variant="outlined" onClick={fetchAll}>Catch 50 Pokemons</Button>
+                    <Button variant="outlined" onClick={fetchAll}>Catch 5 Pokemons</Button>
                     <Button variant="outlined" onClick={resetData}>Reset</Button>
                     <Typography>Catched in: {timer ? timer : '...'} ms</Typography>
                 </Paper>
             </Container>
             <Container maxWidth="lg" className={classes.container}>
                 {loading ? <Typography>Catching...</Typography> : ''}
-                {pokemons.map((pokemon, i) => (
-                    <PreviewCard key={pokemon[i]} name={pokemon.name}></PreviewCard>
+                {pokemons.map(pokemon => (
+                    <PreviewCard 
+                        key={pokemon.name} 
+                        pokemon={pokemon}
+                    ></PreviewCard>
                 ))}
             </Container>
         </>

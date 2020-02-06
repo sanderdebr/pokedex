@@ -14,39 +14,35 @@ function* workerSaga() {
     }
 };
 
-// Chaining multiple promises
-function fetchAll() {
-    const pokemons = [];
-    const start = performance.now();
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=200`)
-        .then(response => response.json())
-        .then(data => data.results)
-        // Running Promise.All
-        .then(results => {
-            fetchPokemon(results).then(pokemons => console.log(pokemons));
-        })
-        .then(() => {
-            const end = performance.now();
-            const timer = end - start;
-        })
+// Fetch a list of pokemon names
+// Chaining promises and checking Promise.all
+async function fetchAll() {
+    let pokemons = [];
+    let start = performance.now();
+
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=5`);
+        const json = await response.json();
+        const arr = json.results;
+        return Promise.all(arr.map(async pokemon => {
+            const result = await fetchPokemon(pokemon);
+            pokemons.push(result);
+        })).then(() => {
+            let end = performance.now();
+            let timer = parseInt(end - start);
+            return {pokemons, timer};
+        });
+    } catch (e) {
+        throw `fetching list of pokemons went wrong`
+    };
 };
 
-let pokemons = [];
-
-const fetchPokemon = async (results) => {
-    Promise.all(results.map(result => {
-        getPokemon(result)
-            .then(item => pokemons.push(item))
-    }))
-    .then(() => {
-        return pokemons;
-    })
+// Get pokemon details for each pokemon
+async function fetchPokemon(pokemon) {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        return await response.json();
+    } catch (e) {
+        throw `fetching ${pokemon.name}'s details went wrong`
+    }
 };
-
-const getPokemon = async result => {
-    return fetch(`https://pokeapi.co/api/v2/pokemon/${result.name}`)
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-}

@@ -16,16 +16,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PreviewCard({ name, type }) {
+// Loop through object sprites and return first existing image
+function getSprite(sprites) {
+  const keys = Object.keys(sprites)
+  for (let i = 0; i < keys.length; i++) {
+    if (keys[i]) return Object.values(sprites)[i];
+  }
+};
+
+export default function PreviewCard({ pokemon }) {
   const classes = useStyles();
+
+  const { name, type } = pokemon;
+  const sprite = pokemon.sprites ? getSprite(pokemon.sprites) : '';
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
+          image={sprite}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
