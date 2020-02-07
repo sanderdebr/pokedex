@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import pokeball from '../../img/pokeball.gif';
 
 import { fetchDescription } from '../../redux/actions/pokemon';
 
@@ -33,18 +34,30 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.main
   },
   name: {
-    paddingBottom: '1rem'
+    marginBottom: '1rem',
+  },
+  pokeball: {
+    width: '30px',
+    height: '30px',
+    marginRight: '1rem',
+  },
+  description: {
+    marginTop: '1rem',
+    display: 'block'
   }
 }));
 
-function Intro({ types, sprite, name, fetchDescription }) {
+function Intro({ types, sprite, name, description, fetchDescription }) {
   const classes = useStyles();
   const params = useParams();
   let id = parseInt(params.pokemonId);
   let prev = id > 1 ? id - 1 : 1;
   let next = id + 1;
 
-  const description = fetchDescription();
+  // Retrieve description on component mount
+  useEffect(() => {
+    fetchDescription(id);
+  });
 
   return (
     <div className={classes.root}>
@@ -58,7 +71,7 @@ function Intro({ types, sprite, name, fetchDescription }) {
                 </Link>
               </Grid>
               <Grid item xs={4}>
-                <img src={sprite} className={classes.sprite} />
+                <img alt={sprite} src={sprite} className={classes.sprite} />
               </Grid>
               <Grid item xs={4} className={classes.iconContainer}>
                 <Link to={`/pokemon/${next}`}>
@@ -68,7 +81,14 @@ function Intro({ types, sprite, name, fetchDescription }) {
             </Grid>
             <Typography variant="h2" className={classes.name}>{name}</Typography>
             <Types types={types} />
-            <Typography variant="h6">{description}</Typography>
+            <div className={classes.description}>
+              {!description
+              ? <>
+                  <img alt={pokeball} className={classes.pokeball} src={pokeball}></img>
+                  <Typography>Catching...</Typography>
+                </>
+              : <Typography variant="h6">{description}</Typography>}
+            </div>
           </Paper>
         </Grid>
       </Grid>
@@ -78,12 +98,14 @@ function Intro({ types, sprite, name, fetchDescription }) {
 
 // Only selecting properties we need the current Pokemon
 const mapStateToProps = state => {
-  const pk = state.pokemons[state.currentPokemon];
+  const pk = state.mainReducer.pokemons[state.mainReducer.currentPokemon];
+  const description = state.pokemonReducer.description;
   return { 
     id: pk.id,
     types: pk.types,
     sprite: getSprite(pk.sprites),
-    name: pk.name
+    name: pk.name,
+    description,
   };
 };
 

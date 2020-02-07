@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 export default function PreviewCard({ pokemon, index }) {
   const classes = useStyles();
 
-  const { id, name, types } = pokemon;
+  const { name, types } = pokemon;
   const sprite = pokemon.sprites ? getSprite(pokemon.sprites) : '';
 
   return (

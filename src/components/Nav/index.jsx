@@ -5,6 +5,7 @@ import { setFilter } from '../../redux/actions/root';
 
 import { Link } from 'react-router-dom';
 
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,7 +23,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -57,9 +57,12 @@ const useStyles = makeStyles(theme => ({
       color: 'white',
     }
   },
+  btn: {
+    marginLeft: '3rem'
+  }
 }));
 
-function Navbar({ pokemons, setFilter, filter }) {
+function Navbar({ pokemons, setFilter, filter, page }) {
   const classes = useStyles();
 
   let placeholder = pokemons.length < 1 
@@ -83,22 +86,27 @@ function Navbar({ pokemons, setFilter, filter }) {
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/">Pokédex</Link>
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          {page !== "pokemon"
+          ?
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                disabled={disabled}
+                placeholder={placeholder}
+                value={filter}
+                onChange={e => setFilter(e.target.value)}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-              disabled={disabled}
-              placeholder={placeholder}
-              value={filter}
-              onChange={e => setFilter(e.target.value)}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          : <Link to="/">
+              <Button variant="contained" className={classes.btn}>BACK TO OVERVIEW</Button>
+            </Link> }
         </Toolbar>
       </AppBar>
     </div>
@@ -106,8 +114,10 @@ function Navbar({ pokemons, setFilter, filter }) {
 };
 
 function mapStateToProps(state) {
-  return { pokemons: state.pokemons }
-}
+  return { 
+    pokemons: state.mainReducer.pokemons,
+  }
+};
 
 const Nav = connect(mapStateToProps, { setFilter })(Navbar);
 

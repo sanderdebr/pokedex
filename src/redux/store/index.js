@@ -1,19 +1,25 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import fetchSaga from '../sagas/fetch-saga';
-import combinedReducers from '../reducers/combined';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 import mainReducer from '../reducers/main';
-
-import logger from 'redux-logger';
+import pokemonReducer from '../reducers/pokemon';
 
 const initSagas = createSagaMiddleware();
 
-const store = createStore(
+const combinedReducers = combineReducers({
     mainReducer,
+    pokemonReducer
+});
+
+const store = createStore(
+    combinedReducers,
     compose(
         applyMiddleware(
             initSagas,
+            thunk,
             logger)
     )
 );

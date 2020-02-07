@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 
 import PreviewCard from '../PreviewCard';
 
+import pokeball from '../../img/pokeball.gif';
+
 const useStyles = makeStyles(() => ({
     container: {
         display: 'flex',
@@ -23,6 +25,11 @@ const useStyles = makeStyles(() => ({
         '& > *': {
             marginRight: '1rem'
         }
+    },
+    pokeball: {
+        width: '30px',
+        height: '30px',
+        marginRight: '1rem',
     }
 }));
 
@@ -45,7 +52,12 @@ function List({ fetchAll, resetData, pokemons, loading, timer, filter, error }) 
                 </Paper>
             </Container>
             <Container maxWidth="lg" className={classes.container}>
-                {loading ? <Typography>Catching...</Typography> : ''}
+                {loading 
+                ? <>
+                    <img alt={pokeball} className={classes.pokeball} src={pokeball}></img>
+                    <Typography>Catching...</Typography>
+                  </>
+                : ''}
                 {filteredPokemons.map((pokemon, i) => (
                     <PreviewCard 
                         key={pokemon.name} 
@@ -60,11 +72,11 @@ function List({ fetchAll, resetData, pokemons, loading, timer, filter, error }) 
 
 function mapStateToProps(state) {
     return { 
-        pokemons: state.pokemons, 
-        loading: state.loading, 
-        timer: state.timer,
-        filter: state.filter,
-        error: state.error
+        pokemons: state.mainReducer.pokemons, 
+        loading: state.mainReducer.loading, 
+        timer: state.mainReducer.timer,
+        filter: state.mainReducer.filter,
+        error: state.mainReducer.error
     }
 };
 

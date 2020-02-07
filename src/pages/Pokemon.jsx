@@ -30,7 +30,7 @@ const Details = ({ pokemons, setPokemon }) => {
 
     return (
         <>
-            <Nav />
+            <Nav page="pokemon" />
             <Container maxWidth="lg" className={classes.container}>
                 {pokemons.length < 1 ? <Redirect to="/"></Redirect> : 
                 <>
@@ -45,7 +45,7 @@ const Details = ({ pokemons, setPokemon }) => {
 };
 
 function mapStateToProps(state) {
-    return { pokemons: state.pokemons }
+    return { pokemons: state.mainReducer.pokemons }
 }
 
 const Pokemon = connect(mapStateToProps, { setPokemon })(Details);
