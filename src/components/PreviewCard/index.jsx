@@ -6,6 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
+import {
+  Link,
+  useRouteMatch
+} from 'react-router-dom';
+
 import Types from './Types';
 
 const useStyles = makeStyles({
@@ -22,24 +27,28 @@ const useStyles = makeStyles({
 export default function PreviewCard({ pokemon }) {
   const classes = useStyles();
 
-  const { name, types } = pokemon;
+  const { id, name, types } = pokemon;
   const sprite = pokemon.sprites ? getSprite(pokemon.sprites) : '';
 
+  let match = useRouteMatch();
+
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={sprite}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {name}
-          </Typography>
-          {types ? <Types types={types} /> : ''}
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Link to={`/pokemon/${id}`}>
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={sprite}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {name}
+            </Typography>
+            {types ? <Types types={types} /> : ''}
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Link>
   );
 };
 

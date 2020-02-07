@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { setFilter } from '../../redux/actions';
 
+import { Link } from 'react-router-dom';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -72,7 +74,7 @@ function Navbar({ setFilter, filter }) {
             <TabletMacIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Pokédex
+            <Link to="/">Pokédex</Link>
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
