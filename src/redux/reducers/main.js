@@ -9,7 +9,7 @@ const initialState = {
     error: null
 };
 
-function rootReducer(state = initialState, action) {
+export default function mainReducer(state = initialState, action) {
     switch(action.type) {
         case actionTypes.DATA_REQUESTED:
             return {...state, loading: true};
@@ -30,5 +30,3 @@ function rootReducer(state = initialState, action) {
             return state;
     };
 };
-
-export default rootReducer;

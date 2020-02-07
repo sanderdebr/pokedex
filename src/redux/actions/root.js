@@ -1,27 +1,27 @@
-import constants from '../constants/action-types';
+import actionTypes from '../constants/action-types';
 
 export function fetchAll() {
     return {
-        type: constants.DATA_REQUESTED
+        type: actionTypes.DATA_REQUESTED
     }
 };
 
 export function resetData() {
     return {
-        type: constants.RESET_DATA
+        type: actionTypes.RESET_DATA
     }
 };
 
 export function setFilter(filter) {
     return {
-        type: constants.SET_FILTER,
+        type: actionTypes.SET_FILTER,
         payload: filter
     }
 };
 
 export function setPokemon(pokemonId) {
     return {
-        type: constants.SET_POKEMON,
+        type: actionTypes.SET_POKEMON,
         payload: pokemonId
     }
 }

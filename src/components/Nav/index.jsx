@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setFilter } from '../../redux/actions';
+import { setFilter } from '../../redux/actions/root';
 
 import { Link } from 'react-router-dom';
 
@@ -36,8 +36,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: '100%',
-    maxWidth: '350px'
+    width: '80vw',
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -54,12 +53,20 @@ const useStyles = makeStyles(theme => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create('width'),
-    width: '100%',
+    '&:disabled': {
+      color: 'white',
+    }
   },
 }));
 
-function Navbar({ setFilter, filter }) {
+function Navbar({ pokemons, setFilter, filter }) {
   const classes = useStyles();
+
+  let placeholder = pokemons.length < 1 
+    ? 'First catch some pokemons..'
+    : 'Live search..';
+  
+  let disabled = pokemons.length < 1;
 
   return (
     <div className={classes.root}>
@@ -81,7 +88,8 @@ function Navbar({ setFilter, filter }) {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              disabled={disabled}
+              placeholder={placeholder}
               value={filter}
               onChange={e => setFilter(e.target.value)}
               classes={{
@@ -97,6 +105,10 @@ function Navbar({ setFilter, filter }) {
   );
 };
 
-const Nav = connect(null, { setFilter })(Navbar);
+function mapStateToProps(state) {
+  return { pokemons: state.pokemons }
+}
+
+const Nav = connect(mapStateToProps, { setFilter })(Navbar);
 
 export default Nav;

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { setPokemon } from '../redux/actions';
+import { setPokemon } from '../redux/actions/root';
 
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 
 import Nav from '../components/Nav/';
 import PokeIntro from '../components/PokeIntro';
@@ -19,11 +19,12 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const Details = ({ setPokemon }) => {
+const Details = ({ pokemons, setPokemon }) => {
     let params = useParams();
+    let pokemonId = params.pokemonId;
 
     // Set current pokemon
-    setPokemon(params.pokemonId);
+    setPokemon(pokemonId);
 
     const classes = useStyles();
 
@@ -31,15 +32,22 @@ const Details = ({ setPokemon }) => {
         <>
             <Nav />
             <Container maxWidth="lg" className={classes.container}>
-                <PokeIntro />
-                <PokeProfile />
-                <PokeStats />
-                <PokeMoves />
+                {pokemons.length < 1 ? <Redirect to="/"></Redirect> : 
+                <>
+                    <PokeIntro />
+                    <PokeProfile />
+                    <PokeStats />
+                    <PokeMoves />
+                </>}
             </Container>
         </>
     );
 };
 
-const Pokemon = connect(null, { setPokemon })(Details);
+function mapStateToProps(state) {
+    return { pokemons: state.pokemons }
+}
+
+const Pokemon = connect(mapStateToProps, { setPokemon })(Details);
 
 export default Pokemon;

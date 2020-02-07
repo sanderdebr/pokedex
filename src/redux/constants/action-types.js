@@ -4,7 +4,8 @@ const actionTypes = {
     API_ERROR: 'API_ERROR',
     RESET_DATA: 'RESET_DATA',
     SET_FILTER: 'SET_FILTER',
-    SET_POKEMON: 'SET_POKEMON'
+    SET_POKEMON: 'SET_POKEMON',
+    FETCH_DESCRIPTION: 'FETCH_DESCRIPTION'
 };
 
 export default actionTypes;

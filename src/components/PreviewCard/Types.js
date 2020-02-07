@@ -17,11 +17,10 @@ export default function Types(props) {
     const classes = useStyles();
 
     const { types } = props;
-    
 
     return (
         <>
-            {types.map((type, i) => {
+            {types ? types.map((type, i) => {
                 const name = type.type.name;
                 return (
                 <Chip 
@@ -29,8 +28,9 @@ export default function Types(props) {
                     label={name}
                     style={{backgroundColor: `${colorTypes[name]}` }}
                 />
-                )}
-            )}
+                )})
+              : ''
+            }
         </>
     )
 };
