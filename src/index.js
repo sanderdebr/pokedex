@@ -12,7 +12,7 @@ import {
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Overview from './pages/Overview';
-import Details from './pages/Details';
+import Pokemon from './pages/Pokemon';
 
 import './index.css';
 
@@ -30,7 +30,7 @@ render(
             <Router>
                 <Switch>
                     <Route path="/pokemon/:pokemonId">
-                        <Details />
+                        <Pokemon />
                     </Route>
                     <Route path="/">
                         <Overview />

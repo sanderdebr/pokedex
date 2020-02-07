@@ -18,3 +18,10 @@ export function setFilter(filter) {
         payload: filter
     }
 };
+
+export function setPokemon(pokemonId) {
+    return {
+        type: constants.SET_POKEMON,
+        payload: pokemonId
+    }
+}

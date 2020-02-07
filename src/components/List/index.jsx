@@ -46,10 +46,11 @@ function List({ fetchAll, resetData, pokemons, loading, timer, filter, error }) 
             </Container>
             <Container maxWidth="lg" className={classes.container}>
                 {loading ? <Typography>Catching...</Typography> : ''}
-                {filteredPokemons.map(pokemon => (
+                {filteredPokemons.map((pokemon, i) => (
                     <PreviewCard 
                         key={pokemon.name} 
                         pokemon={pokemon}
+                        index={i}
                     ></PreviewCard>
                 ))}
             </Container>

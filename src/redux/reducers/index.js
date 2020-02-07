@@ -3,6 +3,7 @@ import actionTypes from '../constants/action-types';
 const initialState = {
     pokemons: [],
     filter: '',
+    currentPokemon: null,
     loading: false,
     timer: null,
     error: null
@@ -23,6 +24,8 @@ function rootReducer(state = initialState, action) {
             return initialState;
         case actionTypes.SET_FILTER:
             return {...state, filter: action.payload}
+        case actionTypes.SET_POKEMON:
+            return {...state, currentPokemon: action.payload}
         default:
             return state;
     };

@@ -7,8 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 import {
-  Link,
-  useRouteMatch
+  Link
 } from 'react-router-dom';
 
 import Types from './Types';
@@ -24,16 +23,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PreviewCard({ pokemon }) {
+export default function PreviewCard({ pokemon, index }) {
   const classes = useStyles();
 
   const { id, name, types } = pokemon;
   const sprite = pokemon.sprites ? getSprite(pokemon.sprites) : '';
 
-  let match = useRouteMatch();
-
   return (
-    <Link to={`/pokemon/${id}`}>
+    <Link to={`/pokemon/${index}`}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
