@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchAll, resetData } from '../redux/actions';
+import { fetchAll, resetData } from '../../redux/actions';
 
 import { makeStyles, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-import PreviewCard from './PreviewCard';
+import PreviewCard from '../PreviewCard';
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -26,10 +26,8 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function List({ fetchAll, resetData, pokemons, loading, timer, filter }) {
+function List({ fetchAll, resetData, pokemons, loading, timer, filter, error }) {
     const classes = useStyles();
-    
-    const testPokemon = { name: 'Pikachu' };
 
     const filteredPokemons = pokemons.filter(pk => pk.name.includes(filter));
     
@@ -39,7 +37,11 @@ function List({ fetchAll, resetData, pokemons, loading, timer, filter }) {
                 <Paper className={classes.options}>
                     <Button variant="outlined" onClick={fetchAll}>Catch Pokemons</Button>
                     <Button variant="outlined" onClick={resetData}>Reset</Button>
-                    <Typography>Catched in: {timer ? timer : '...'} ms</Typography>
+                    <Typography>{
+                        error
+                        ? <span>Something bad happened: {error.message}</span>
+                        : <span>Catched in: {timer ? timer : '...'} ms</span>
+                    }</Typography>
                 </Paper>
             </Container>
             <Container maxWidth="lg" className={classes.container}>
@@ -60,7 +62,8 @@ function mapStateToProps(state) {
         pokemons: state.pokemons, 
         loading: state.loading, 
         timer: state.timer,
-        filter: state.filter
+        filter: state.filter,
+        error: state.error
     }
 };
 

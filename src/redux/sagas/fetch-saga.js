@@ -33,7 +33,7 @@ async function fetchAll() {
             return {pokemons, timer};
         });
     } catch (e) {
-        throw `fetching list of pokemons went wrong`
+        throw new Error(`fetching list of pokemons went wrong`);
     };
 };
 
@@ -43,6 +43,6 @@ async function fetchPokemon(pokemon) {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
         return await response.json();
     } catch (e) {
-        throw `fetching ${pokemon.name}'s details went wrong`
+        throw new Error(`fetching ${pokemon.name}'s details went wrong`);
     }
 };

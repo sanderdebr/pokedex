@@ -1,6 +1,6 @@
 import React from 'react';
 
-import colorTypes from '../data/color-types';
+import colorTypes from '../../data/color-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
