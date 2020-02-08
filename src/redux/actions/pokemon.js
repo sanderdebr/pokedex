@@ -26,4 +26,26 @@ export function loadMoves(bool) {
         type: actionTypes.LOAD_MOVES,
         payload: bool
     }
-}
+};
+
+export function loadMove(name) {
+    return async dispatch => {
+        dispatch({ type: actionTypes.MOVE_REQUEST });
+        try {
+            const response = await fetch(`https://pokeapi.co/api/v2/move/${name}`);
+            const move = await response.json();
+            return onSucces(move);
+        } catch (error) {
+            return onError(error)
+        }
+
+        function onSucces(move) {
+            dispatch({ type: actionTypes.MOVE_LOADED, payload: move});
+            return move
+        }
+        function onError(error) {
+            dispatch({ type: actionTypes.API_ERROR, payload: error });
+            return error;
+        }
+    }
+};

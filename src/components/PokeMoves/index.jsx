@@ -60,7 +60,7 @@ const Moves = ({ moves, showMoves, loadMoves }) => {
                         <Typography variant="h4" className={classes.title}>Moves ({moves.length})</Typography>
                         <Container maxWidth="md" className={classes.container}>
                             {showMoves
-                            ? moves.map(item => <Move item={item} />)
+                            ? moves.map(item => <Move move={item} />)
                             : <Typography variant="h6">Scroll down to load moves ...</Typography>}
                         </Container>
                     </Paper>
