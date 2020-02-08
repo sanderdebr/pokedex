@@ -21,7 +21,7 @@ async function fetchAll() {
     let start = performance.now();
 
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=25`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=150`);
         const json = await response.json();
         const arr = json.results;
         return Promise.all(arr.map(async pokemon => {
