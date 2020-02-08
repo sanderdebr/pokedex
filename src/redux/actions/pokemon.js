@@ -20,3 +20,10 @@ export function fetchDescription(id) {
         }
     }
 };
+
+export function loadMoves(bool) {
+    return {
+        type: actionTypes.LOAD_MOVES,
+        payload: bool
+    }
+}

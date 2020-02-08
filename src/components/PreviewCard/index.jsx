@@ -23,14 +23,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PreviewCard({ pokemon, index }) {
+export default function PreviewCard({ pokemon }) {
   const classes = useStyles();
 
-  const { name, types } = pokemon;
+  const { id, name, types } = pokemon;
   const sprite = pokemon.sprites ? getSprite(pokemon.sprites) : '';
 
   return (
-    <Link to={`/pokemon/${index}`}>
+    <Link to={`/pokemon/${id}`}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia

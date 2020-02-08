@@ -95,9 +95,20 @@ function Intro({ types, sprite, name, description, fetchDescription }) {
   );
 };
 
+function getPoke(state, curPokeId) {
+  const pokemons = state.mainReducer.pokemons;
+  const values = Object.values(pokemons);
+  for (let i = 0; i < values.length; i++) {
+    if (values[i].id === curPokeId) return values[i];
+  }
+};
+
 // Only selecting properties we need the current Pokemon
 const mapStateToProps = state => {
-  const pk = state.mainReducer.pokemons[state.mainReducer.currentPokemon];
+
+  const curPokeId = state.mainReducer.currentPokemon;
+  const pk = getPoke(state, curPokeId);
+
   const description = state.pokemonReducer.description;
   return { 
     id: pk.id,

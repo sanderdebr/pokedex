@@ -13,18 +13,23 @@ import PokeMoves from '../components/PokeMoves';
 import { makeStyles } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 
+import { loadMoves } from '../redux/actions/pokemon';
+
 const useStyles = makeStyles(() => ({
     container: {
         marginTop: '1.5rem'
     }
 }));
 
-const Details = ({ pokemons, setPokemon }) => {
+const Details = ({ pokemons, setPokemon, loadMoves }) => {
     let params = useParams();
-    let pokemonId = params.pokemonId;
+    let pokemonId = parseInt(params.pokemonId);
 
     // Set current pokemon
     setPokemon(pokemonId);
+
+    // Hide moves
+    loadMoves(false);
 
     const classes = useStyles();
 
@@ -48,6 +53,6 @@ function mapStateToProps(state) {
     return { pokemons: state.mainReducer.pokemons }
 }
 
-const Pokemon = connect(mapStateToProps, { setPokemon })(Details);
+const Pokemon = connect(mapStateToProps, { setPokemon, loadMoves })(Details);
 
 export default Pokemon;

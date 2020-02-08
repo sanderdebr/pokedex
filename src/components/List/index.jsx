@@ -62,7 +62,6 @@ function List({ fetchAll, resetData, pokemons, loading, timer, filter, error }) 
                     <PreviewCard 
                         key={pokemon.name} 
                         pokemon={pokemon}
-                        index={i}
                     ></PreviewCard>
                 ))}
             </Container>

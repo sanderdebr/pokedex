@@ -76,10 +76,20 @@ const Profile = ({ height, weight, base_exp, abilities, held_items }) => {
             </Grid>
         </div>
     )
-}
+};
+
+function getPoke(state, curPokeId) {
+    const pokemons = state.mainReducer.pokemons;
+    const values = Object.values(pokemons);
+    for (let i = 0; i < values.length; i++) {
+      if (values[i].id === curPokeId) return values[i];
+    }
+  };
 
 function mapStateToProps(state) {
-    const pk = state.mainReducer.pokemons[state.mainReducer.currentPokemon];
+    const curPokeId = state.mainReducer.currentPokemon;
+    const pk = getPoke(state, curPokeId);
+
     const abilities = pk.abilities.length ? pk.abilities.map(el => el.ability.name).join(', ') : 'none';
     const held_items = pk.held_items.length ? pk.held_items.map(el => el.item.name).join(', ') : 'none';
     return { 
