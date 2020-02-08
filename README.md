@@ -1,5 +1,7 @@
 # Pokédex
 
+Live: https://master.d1or1a1srkom3l.amplifyapp.com/
+
 Pokédex made with:
 
 - React with Redux
@@ -8,5 +10,3 @@ Pokédex made with:
 - Live search
 - Material UI for React.
 - PokeAPI (https://pokeapi.co/)
-
-https://master.d1or1a1srkom3l.amplifyapp.com/
