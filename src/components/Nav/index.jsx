@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   menuButton: {
+    width: '40px',
     marginRight: theme.spacing(2),
   },
   title: {
@@ -35,8 +36,8 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginLeft: 0,
-    width: '80vw',
+    marginLeft: '4rem',
+    width: '70vw',
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -59,6 +60,12 @@ const useStyles = makeStyles(theme => ({
   },
   btn: {
     marginLeft: '3rem'
+  },
+  try: {
+    marginLeft: '3rem',
+    opacity: '.5',
+    fontSize: 'rem',
+    fontStyle: 'italic'
   }
 }));
 
@@ -104,9 +111,12 @@ function Navbar({ pokemons, setFilter, filter, page }) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-          : <Link to="/">
-              <Button variant="contained" className={classes.btn}>BACK TO OVERVIEW</Button>
-            </Link> }
+          : <>
+              <Link to="/">
+                <Button variant="contained" className={classes.btn}>BACK TO OVERVIEW</Button>
+              </Link>
+              <Typography variant="h6" className={classes.try}>Try navigating between pokemons</Typography>
+            </> }
         </Toolbar>
       </AppBar>
     </div>
